@@ -1,0 +1,654 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    
+    <title>MGIE</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
+        
+        body {
+            width: 1200px;
+            margin: auto;
+            font-family: 'Nunito';
+            font-size: 18px;
+        }
+        a {
+            color: #1772d0;
+            text-decoration: none;
+        }
+        a:focus, a:hover {
+            color: #f09228;
+            text-decoration: none;
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+        }
+        th {
+            width: 190px;
+            text-align: center;
+            
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            background: #eee;
+        }
+        td {
+            width: 185px;
+            height: 190px;
+            text-align: center;
+        }
+        td img {
+            display: block;
+            margin: auto;
+            width: 185px;
+        }
+    </style>
+
+    <script>
+        function show(img) {
+            if (img.src.endsWith("press.jpg") == true) img.src = img.id;
+            else img.src = "./press.jpg";
+        }
+    </script>   
+</head>
+
+<body>
+    <br />
+    <center><h1><B>Guiding Instruction-based Image Editing<br />via Multimodal Large Language Models</B></h1></center>
+    <br />
+    <center><img src="./mgie.png" style="width: 800px;" /></center>
+    <br />
+    <center>
+        <h2>Abstract</h2>
+        <p style="width: 700px; margin: 0 auto; text-align: justify; text-justify: inter-ideograph;">Instruction-based image editing improves the controllability and flexibility of image manipulation via natural commands without elaborate descriptions or regional masks. However, human instructions are sometimes too brief for current methods to capture and follow. Multimodal large language models (MLLMs) show promising capabilities in cross-modal understanding and visual-aware response generation via LMs. We investigate how MLLMs facilitate edit instructions and present MLLM-Guided Image Editing (MGIE). MGIE learns to derive expressive instructions and provides explicit guidance. The editing model jointly captures this visual imagination and performs manipulation through end-to-end training. We evaluate various aspects of Photoshop-style modification, global photo optimization, and local editing. Extensive experimental results demonstrate that expressive instructions are crucial to instruction-based image editing, and our MGIE can lead to a notable improvement in automatic metrics and human evaluation while maintaining competitive inference efficiency.</p>
+    </center>
+    <br /> <hr />
+    <center>
+        <h2>Qualitative Comparison</h2>
+        <p style="font-size: 18px;">👇 press the tab for different datasets</p>
+    </center>
+    <center>
+        <ul class="nav nav-tabs nav-justified" style="width: 1150px;">
+            <li class="active"><a data-toggle="tab" href="#qual_p2p">IPr2Pr</a></li>
+            <li><a data-toggle="tab" href="#qual_evr">EVR</a></li>
+            <li><a data-toggle="tab" href="#qual_gier">GIER</a></li>
+            <li><a data-toggle="tab" href="#qual_ma5k">MA5k</a></li>
+            <li><a data-toggle="tab" href="#qual_mb">MagicBrush</a></li>
+        </ul>
+    </center>
+    <div class="tab-content">
+        <br />
+        <div class="tab-pane fade in active" id="qual_p2p">
+            <div>
+                <table style="border-collapse: collapse; margin: auto;">
+                    <tr>
+                        <th>Input</th>
+                        <th>Instruction</th>
+                        <th>InsPix2Pix</th>
+                        <th>LGIE</th>
+                        <th>MGIE</th>
+                        <th>GroundTruth</th>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_0_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">turn the day into night</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_0_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_0_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_0_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_0_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_1_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">make the forest path into a beach</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_1_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_1_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_1_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_1_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_2_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">make the frame red</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_2_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_2_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_2_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_2_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_3_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">as if the shop was a library</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_3_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_3_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_3_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_3_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_4_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">make it the vatican</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_4_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_4_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_4_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_4_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_5_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">turn the sunset into a firestorm</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_5_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_5_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_5_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_5_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="qual_evr">
+            <div>
+                <table style="border-collapse: collapse; margin: auto;">
+                    <tr>
+                        <th>Input</th>
+                        <th>Instruction</th>
+                        <th>InsPix2Pix</th>
+                        <th>LGIE</th>
+                        <th>MGIE</th>
+                        <th>GroundTruth</th>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_0_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">remove text</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_0_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_0_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_0_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_0_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_1_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">show him on a frozen lake with snowy mountains</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_1_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_1_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_1_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_1_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_2_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">increase the brightness of the entire image</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_2_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_2_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_2_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_2_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_3_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">take the people out of the back in the photo</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_3_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_3_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_3_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_3_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_4_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">add tiger</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_4_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_4_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_4_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_4_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_5_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">change the background to blue</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_5_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_5_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_5_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_5_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="qual_gier">
+            <div>
+                <table style="border-collapse: collapse; margin: auto;">
+                    <tr>
+                        <th>Input</th>
+                        <th>Instruction</th>
+                        <th>InsPix2Pix</th>
+                        <th>LGIE</th>
+                        <th>MGIE</th>
+                        <th>GroundTruth</th>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_0_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">edit out skiers on right</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_0_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_0_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_0_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_0_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_1_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">make it look more professional</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_1_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_1_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_1_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_1_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_2_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">remove hot air balloons</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_2_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_2_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_2_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_2_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_3_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">make colors pop out</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_3_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_3_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_3_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_3_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_4_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">remove boy with red shirt from picture</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_4_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_4_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_4_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_4_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_5_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">lighten out yellow tone</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_5_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_5_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_5_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_5_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="qual_ma5k">
+            <div>
+                <table style="border-collapse: collapse; margin: auto;">
+                    <tr>
+                        <th>Input</th>
+                        <th>Instruction</th>
+                        <th>InsPix2Pix</th>
+                        <th>LGIE</th>
+                        <th>MGIE</th>
+                        <th>GroundTruth</th>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_0_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">add brightness so the clouds look bright white</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_0_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_0_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_0_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_0_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_1_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">make the color more green</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_1_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_1_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_1_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_1_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_2_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">add more contrast to simulate more light</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_2_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_2_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_2_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_2_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_3_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">remove the blue hue out of the picture</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_3_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_3_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_3_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_3_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_4_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">brighten image a lot, sharpen photo</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_4_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_4_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_4_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_4_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_5_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">need to clarified, more focus</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_5_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_5_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_5_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_5_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="qual_mb">
+            <div>
+                <table style="border-collapse: collapse; margin: auto;">
+                    <tr>
+                        <th>Input</th>
+                        <th>Instruction</th>
+                        <th>InsPix2Pix</th>
+                        <th>LGIE</th>
+                        <th>MGIE</th>
+                        <th>GroundTruth</th>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_0_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">have there be a birthday cake on the table</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_0_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_0_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_0_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_0_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_1_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">put buildings in the background of the image</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_1_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_1_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_1_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_1_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_2_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">make the face happy</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_2_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_2_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_2_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_2_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_3_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">let there be palm trees</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_3_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_3_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_3_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_3_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_4_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">has a green web page</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_4_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_4_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_4_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_4_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_5_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">replace food with soup</div></center></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_5_p2p.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_5_lgie.jpg" /></td>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_5_mgie.jpg" /></td>
+                        <td><img src="./press.jpg" id="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_5_answer.jpg" onclick="show(this)" /></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br /><hr />
+    <center>
+        <h2>Expressive Instruction</h2>
+    </center>
+    <center>
+        <ul class="nav nav-tabs nav-justified" style="width: 1150px;">
+            <li class="active"><a data-toggle="tab" href="#ei_p2p">IPr2Pr</a></li>
+            <li><a data-toggle="tab" href="#ei_evr">EVR</a></li>
+            <li><a data-toggle="tab" href="#ei_gier">GIER</a></li>
+            <li><a data-toggle="tab" href="#ei_ma5k">MA5k</a></li>
+            <li><a data-toggle="tab" href="#ei_mb">MagicBrush</a></li>
+        </ul>
+    </center>
+    <div class="tab-content">
+        <br />
+        <div class="tab-pane fade in active" id="ei_p2p">
+            <div>
+                <table style="border-collapse: collapse; margin: auto;">
+                    <tr>
+                        <th>Input</th>
+                        <th>Instruction</th>
+                        <th style="width: 350px;">Expressive Instruction by LGIE</th>
+                        <th style="width: 350px;">Expressive Instruction by MGIE</th>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_0_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">turn the day into night</div></center></td>
+                        <td><center><div style="width: 260px; text-align: left;">Turn into night, such as a photograph of a starry night sky, a moon, stars, or a planet. Hold your cursor over the night sky icon.</div></center></td>
+                        <td><center><div style="width: 260px; text-align: left;">If the day were to be turned into night in this image, the Eiffel Tower would be illuminated by artificial lights, creating a contrast against the dark sky.</div></center></td></tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_1_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">make the forest path into a beach</div></center></td>
+                        <td><center><div style="width: 260px; text-align: left;">The beach would be made from the dirt and rocks that were on the forest path, and the trees would be transplanted to make way for the new beach.</div></center></td>
+                        <td><center><div style="width: 260px; text-align: left;">The image would depict a person running along a sandy shore. The trees surrounding the path would be replaced with ocean waves.</div></center></td></tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_2_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">make the frame red</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">You can edit the image to make the frame red. You could also crop the frame to remove the white borders and make it more prominent.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">If the glasses had a red frame instead of a black frame, the red frame would draw attention to the glasses with the gray background.</div></center></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_3_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">as if the shop was a library</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">For the idea of making the shop look like a library,  you can organize the books and flowers in a way that creates a calm and orderly environment.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">This image shows a woman standing at a counter with an abundance of flowers. The books on the shelves behind her would replace the vases of flowers.</div></center></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_4_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">make it the vatican</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">The image would be draped in gold and crimson fabrics. The colors would be deep and rich, evoking a sense of reverence and awe.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">If the image were set at the Vatican, it would show a serene scene with the city's iconic architecture, such as St. Peter's Basilica or the Vatican City walls.</div></center></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/p2p_5_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">turn the sunset into a firestorm</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">The entire scene would be enveloped in a hazy, orange-reddish glow, and the horizon would be defined by a towering wall of flame.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">The already vibrant colors from the sunset would be intensified, with the orange hues becoming more fiery and possibly spreading across the sky.</div></center></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="ei_evr">
+            <div>
+                <table style="border-collapse: collapse; margin: auto;">
+                    <tr>
+                        <th>Input</th>
+                        <th>Instruction</th>
+                        <th style="width: 350px;">Expressive Instruction by LGIE</th>
+                        <th style="width: 350px;">Expressive Instruction by MGIE</th>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_0_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">remove text</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">The sentence would become blank, leaving no visual representation of the previously described image.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">The text could be removed completely, leaving only the dog and the pier.</div></center></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_1_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">show him on a frozen lake with snowy mountains</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">The image would likely be quite picturesque and beautiful with a touch of brown from the frozen lake and the snow.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">The man enjoys the thrill of gliding across the icy surface. The atmosphere would be accentuated by the snow-covered landscape and the distant mountains.</div></center></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_2_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">increase the brightness of the entire image</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">Increasing the brightness of an image. The result is a clearer and more vibrant image.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">Adjust the brightness to bring out the details. A setting with a group of women sitting around a round table would appear more vivid.</div></center></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_3_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">take the people out of the back in the photo</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">The photo would be less crowded and have more space without the people in the back, creating a more tranquil atmosphere.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">The scene would appear more empty and there would be a noticeable presence of the bride and groom.</div></center></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_4_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">add tiger</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">This image features a cartoon illustration of a beloved character of Tiger. His bright orange fur stands out against the green grass below.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">An image of a man holding a football in a field will be enhanced with the addition of tiger. It will engage in a playful interaction or enjoy the field.</div></center></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/evr_5_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">change the background to blue</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">If you change the background color of an image to blue, the other colors in the image will be adjusted to match the new background color.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">A woman wearing a pink dress and holding yellow sunflowers would stand in front of a blue background.</div></center></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="ei_gier">
+            <div>
+                <table style="border-collapse: collapse; margin: auto;">
+                    <tr>
+                        <th>Input</th>
+                        <th>Instruction</th>
+                        <th style="width: 350px;">Expressive Instruction by LGIE</th>
+                        <th style="width: 350px;">Expressive Instruction by MGIE</th>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_0_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">edit out skiers on right</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">This image originally featured skiers on the right side, but they have been removed, leaving the image empty.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">The image would focus on the individual skier with the backpack instead of the group of skiers in the foreground.</div></center></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_1_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">make it look more professional</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">Using high-quality, professional-looking stock images or custom artwork. Make it more visually appealing, or remove any unwanted elements.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">This image could be made more professional by featuring a businessman and a composition that highlights the tall building in the background.</div></center></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_2_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">remove hot air balloons</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">The sky is now empty. These colorful vessels have now disappeared, leaving no trace of their existence.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">The mountain range would still be the focus of the photograph, but the balloon would no longer be a focal point.</div></center></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_3_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">make colors pop out</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">Adjust the colors in the image pop to make them look more vivid and striking. This will create a more eye-catching contrast.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">It would enhance the vibrancy and saturation of the man's tan trench coat and light blue sneakers, as well as the wooden bench and dirt field.</div></center></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_4_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">remove boy with red shirt from picture</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">The image would be filled in the area where the boy with the red shirt is currently visible.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">Without the boy, the scene would feature a man alone in a forested area, sitting on a log and enjoying a drink.</div></center></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/gier_5_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">lighten out yellow tone</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">Reduce the amount of yellow tone in the image by adjusting the white balance to make the tone appear less yellow.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">The image of the man and woman in formal attire will appear more vibrant and lively, and the background will become less prominent.</div></center></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="ei_ma5k">
+            <div>
+                <table style="border-collapse: collapse; margin: auto;">
+                    <tr>
+                        <th>Input</th>
+                        <th>Instruction</th>
+                        <th style="width: 350px;">Expressive Instruction by LGIE</th>
+                        <th style="width: 350px;">Expressive Instruction by MGIE</th>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_0_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">add brightness so the clouds look bright white</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">Make the clouds in your image look brighter and more white. Or remove them and then add back in as white.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">Adjust the brightness of the image to bring out the details of the sky, the cloud, and the building in the picture.</div></center></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_1_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">make the color more green</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">The image would become greener if the color was made more green. This would mean more green pixels, resulting in a greener hue overall.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">Enhance the greenery in the image by making the grass greener. The field would have a richer hue and would stand out more against the backdrop.</div></center></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_2_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">add more contrast to simulate more light</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">Adding more contrast to an image will make it appear more vibrant, sharp, and detailed, just like what you see in real life.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">It would make the snow brighter, the skier's jacket stand out more, and other details more visible and dynamic.</div></center></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_3_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">remove the blue hue out of the picture</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">Colors and details will be easier to distinguish, allowing the image to truly stand out.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">The image would make the orange truck stand out. The sky in the background would also show more vivid colors.</div></center></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_4_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">brighten image a lot, sharpen photo</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">The image would be transformed into a painting-like look, with bright colors and sharp details. It would be highly saturated.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">Brighten the damaged window sill to bring out the details of the chipping paint and broken glass.</div></center></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/ma5k_5_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">need to clarified, more focus</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">It encourages the viewer to take a closer look and focus on the key elements, bringing the image to better clarity and sharpness.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">This will help capture the intricate details of the yellow and orange flowers and maximize the visual impact of the bouquet.</div></center></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="ei_mb">
+            <div>
+                <table style="border-collapse: collapse; margin: auto;">
+                    <tr>
+                        <th>Input</th>
+                        <th>Instruction</th>
+                        <th style="width: 350px;">Expressive Instruction by LGIE</th>
+                        <th style="width: 350px;">Expressive Instruction by MGIE</th>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_0_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">have there be a birthday cake on the table</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">A birthday cake sits on a table, decorated with candles and frosting.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">This image features a kitchen with a dining table and chairs, and a birthday cake has been added to the table.</div></center></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_1_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">put buildings in the background of the image</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">The image would be a peaceful cityscape. Silhouetted buildings in the background would be a stunning contrast.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">The image would feature a train traveling down the tracks with city buildings in the background, creating a dynamic composition.</div></center></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_2_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">make the face happy</div></center></td>
+                        <td><center><div style="width: 260px; text-align: left;">Making the face emoji happier would involve adding more emotion and energy, like smiling lines and cheerful expressions.</div></center></td>
+                        <td><center><div style="width: 260px; text-align: left;">Change the emoticon displayed on a cell phone screen to a cheerful one, next to a laptop on a desk.</div></center></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_3_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">let there be palm trees</div></center></td>
+                        <td><center><div style="width: 260px; text-align: left;">The image would be transformed from its current state to a landscape with palm trees, bringing a sense of warmth and vibrancy.</div></center></td>
+                        <td><center><div style="width: 260px; text-align: left;">Palm trees would be a natural addition to a beach scene with a large clock in the foreground.</div></center></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_4_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">has a green web page</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">This web page will show a green background with white text. The vibrant color combination is sure to make any content stand out.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">The green web page is related to a project or task that the user is currently working on. The other scheme still remains.</div></center></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://raw.githubusercontent.com/mllm-ie/mllm-ie.github.io/main/_qual/magic-brush_5_input.jpg" /></td>
+                        <td><center><div style="width: 120px; text-align: left;">replace food with soup</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">The bowl was empty, so I filled it with a bowl of steaming soup. The aroma filled the room as I stirred the soup, ready to enjoy.</div></center></td>
+						<td><center><div style="width: 260px; text-align: left;">The image would change from sandwiches to bowls of soup. The tray would still have a plate but with a different meal option of soup.</div></center></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br />
+</body>
